@@ -1,8 +1,17 @@
 {
-  "rewrites": [
-    { "source": "/", "destination": "/landing.html" },
-    { "source": "/home", "destination": "/index.html" },
-    { "source": "/auth", "destination": "/auth.html" }
+  "routes": [
+    { "src": "^/$", "dest": "/landing.html" },
+    { "src": "/home", "dest": "/index.html" },
+    { "src": "/auth", "dest": "/auth.html" },
+    { "src": "/(.*)\\.js$", "dest": "/$1.js" },
+    { "src": "/(.*)\\.css$", "dest": "/$1.css" },
+    { "src": "/(.*)\\.svg$", "dest": "/$1.svg" },
+    { "src": "/(.*)\\.jpg$", "dest": "/$1.jpg" },
+    { "src": "/(.*)\\.jpeg$", "dest": "/$1.jpeg" },
+    { "src": "/(.*)\\.png$", "dest": "/$1.png" },
+    { "src": "/(.*)\\.gif$", "dest": "/$1.gif" },
+    { "src": "/(.*)\\.ico$", "dest": "/$1.ico" },
+    { "src": "/(.*)\\.json$", "dest": "/$1.json" }
   ],
   "headers": [
     {
@@ -15,7 +24,7 @@
       ]
     },
     {
-      "source": "/(.*).(js|css|svg|jpg|jpeg|png|gif|ico|json)",
+      "source": "/(.*)\\.(js|css|svg|jpg|jpeg|png|gif|ico|json)",
       "headers": [
         {
           "key": "Cache-Control",

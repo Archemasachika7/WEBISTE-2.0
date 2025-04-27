@@ -159,6 +159,24 @@ animateElements.forEach((element, index) => {
     element.style.transitionDelay = `${delay}ms`;
 });
 
+// Add this to your main page script.js
+document.addEventListener('DOMContentLoaded', () => {
+    // Check if user is authenticated
+    firebase.auth().onAuthStateChanged(user => {
+        if (!user) {
+            // User is not authenticated, redirect to landing page
+            window.location.href = 'landing.html';
+        } else {
+            // User is authenticated, show content
+            document.body.classList.add('authenticated');
+            // You can also update UI with user info
+            if (user.displayName) {
+                document.querySelector('.user-name').textContent = user.displayName;
+            }
+        }
+    });
+});
+
 // Coding Challenge Features
 // This would connect to a backend in a real implementation
 const challengeData = [
@@ -269,6 +287,19 @@ function updateLeaderboard() {
     
     alert(`Leaderboard filtered by: ${timeFilter} time period and ${categoryFilter} category`);
 }
+
+// Add this to your main page script.js
+const logoutBtn = document.getElementById('logout-btn');
+if (logoutBtn) {
+    logoutBtn.addEventListener('click', () => {
+        firebase.auth().signOut().then(() => {
+            window.location.href = 'landing.html';
+        }).catch(error => {
+            console.error('Logout error:', error);
+        });
+    });
+}
+
 
 // Code Editor functionality for challenge page
 // This would be implemented on the challenge detail page

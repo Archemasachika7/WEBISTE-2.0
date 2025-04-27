@@ -1,6 +1,6 @@
 // Firebase Configuration
 const firebaseConfig = {
-    apiKey: "",
+    apiKey: "YOUR_API_KEY_HERE", // Replace with your actual API key
     authDomain: "ahjincc.firebaseapp.com",
     databaseURL: "https://ahjincc-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "ahjincc",
@@ -125,7 +125,6 @@ function checkPasswordStrength(password) {
     const hasUpperCase = /[A-Z]/.test(password);
     const hasNumbers = /\d/.test(password);
     const hasSpecialChars = /[!@#$%^&*(),.?":{}|<>]/.test(password);
-    
     const criteria = [hasLowerCase, hasUpperCase, hasNumbers, hasSpecialChars].filter(Boolean).length;
     
     if (length < 6) {
@@ -153,12 +152,16 @@ function hideLoading() {
 function showSuccessModal(message) {
     successMessage.textContent = message;
     successModal.classList.add('active');
+    
+    // Automatically redirect after 2 seconds
+    setTimeout(() => {
+        window.location.href = 'index.html'; // Change to your main page
+    }, 2000);
 }
 
 // Email/Password Login
 loginForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
     
@@ -176,7 +179,6 @@ loginForm.addEventListener('submit', async (e) => {
 // Email/Password Registration
 registerForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    
     const name = document.getElementById('registerName').value;
     const email = document.getElementById('registerEmail').value;
     const password = document.getElementById('registerPassword').value;
@@ -240,7 +242,7 @@ githubRegisterBtn.addEventListener('click', signInWithGithub);
 
 // Success Done Button
 successDoneBtn.addEventListener('click', () => {
-    window.location.href = 'index.html';
+    window.location.href = 'index.html'; // Change to your main page
 });
 
 // Close Success Modal when clicking outside
@@ -250,19 +252,6 @@ successModal.addEventListener('click', (e) => {
     }
 });
 
-// Update landing.js to redirect to auth.html
-// This is a note for you to update your landing.js file with the following code:
-/*
-// In your landing.js file, update the login and register button event listeners:
-loginBtn.addEventListener('click', () => {
-    window.location.href = 'auth.html?tab=login';
-});
-
-registerBtn.addEventListener('click', () => {
-    window.location.href = 'auth.html?tab=register';
-});
-*/
-
 // Check URL parameters to set active tab
 document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -271,7 +260,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (tab === 'register') {
         authTabs.forEach(t => t.classList.remove('active'));
         document.querySelector('[data-tab="register"]').classList.add('active');
-        
         authForms.forEach(form => form.classList.remove('active'));
         registerForm.classList.add('active');
     }

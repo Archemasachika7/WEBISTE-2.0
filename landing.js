@@ -162,4 +162,127 @@ mobileMenuBtn.addEventListener('click', () => {
 });
 
 mobileMenuClose.addEventListener('click', () => {
-    mobileMenu.
+    mobileMenu.classList.remove('active');
+});
+
+// Tabs
+tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        
+        // Update active tab button
+        tabBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Show active tab content
+        tabPanes.forEach(pane => pane.classList.remove('active'));
+        document.getElementById(`${tab}-tab`).classList.add('active');
+    });
+});
+
+// FAQ Accordion
+faqItems.forEach(item => {
+    const question = item.querySelector('.faq-question');
+    
+    question.addEventListener('click', () => {
+        const isActive = item.classList.contains('active');
+        
+        // Close all items
+        faqItems.forEach(i => i.classList.remove('active'));
+        
+        // Open clicked item if it wasn't active
+        if (!isActive) {
+            item.classList.add('active');
+        }
+    });
+});
+
+// Testimonial Slider
+const testimonialCards = document.querySelectorAll('.testimonial-card');
+const dots = document.querySelectorAll('.testimonial-dots .dot');
+const prevBtn = document.querySelector('.prev-btn');
+const nextBtn = document.querySelector('.next-btn');
+let currentSlide = 0;
+
+function showSlide(index) {
+    // Hide all slides
+    testimonialCards.forEach(card => {
+        card.style.display = 'none';
+    });
+    
+    // Remove active class from all dots
+    dots.forEach(dot => {
+        dot.classList.remove('active');
+    });
+    
+    // Show current slide and activate dot
+    testimonialCards[index].style.display = 'block';
+    dots[index].classList.add('active');
+}
+
+// Initialize slider
+showSlide(currentSlide);
+
+// Next slide
+nextBtn.addEventListener('click', () => {
+    currentSlide = (currentSlide + 1) % testimonialCards.length;
+    showSlide(currentSlide);
+});
+
+// Previous slide
+prevBtn.addEventListener('click', () => {
+    currentSlide = (currentSlide - 1 + testimonialCards.length) % testimonialCards.length;
+    showSlide(currentSlide);
+});
+
+// Dot navigation
+dots.forEach((dot, index) => {
+    dot.addEventListener('click', () => {
+        currentSlide = index;
+        showSlide(currentSlide);
+    });
+});
+
+// Auto slide (optional)
+setInterval(() => {
+    currentSlide = (currentSlide + 1) % testimonialCards.length;
+    showSlide(currentSlide);
+}, 8000);
+
+// Interactive Demo
+tryBtn.addEventListener('click', () => {
+    alert('In a real implementation, this would open an interactive demo of the platform.');
+});
+
+// Auth Redirects
+function redirectToAuth(tab) {
+    window.location.href = `auth.html?tab=${tab}`;
+}
+
+if (loginBtn) loginBtn.addEventListener('click', () => redirectToAuth('login'));
+if (mobileLoginBtn) mobileLoginBtn.addEventListener('click', () => redirectToAuth('login'));
+if (registerBtn) registerBtn.addEventListener('click', () => redirectToAuth('register'));
+if (ctaRegisterBtn) ctaRegisterBtn.addEventListener('click', () => redirectToAuth('register'));
+if (ctaLoginBtn) ctaLoginBtn.addEventListener('click', () => redirectToAuth('login'));
+
+// Initialize animations
+document.addEventListener('DOMContentLoaded', () => {
+    // Create particles
+    createCodeParticles();
+    
+    // Create map dots
+    createMapDots();
+    
+    // Fade in the page
+    document.body.classList.add('loaded');
+    
+    // Check URL parameters for direct auth redirects
+    const urlParams = new URLSearchParams(window.location.search);
+    const authRedirect = urlParams.get('auth');
+    
+    if (authRedirect === 'login') {
+        redirectToAuth('login');
+    } else if (authRedirect === 'register') {
+        redirectToAuth('register');
+    }
+});

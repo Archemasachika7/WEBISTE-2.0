@@ -252,8 +252,80 @@ successModal.addEventListener('click', (e) => {
     }
 });
 
-// Check URL parameters to set active tab
-document.addEventListener('DOMContentLoaded', () => {
+// Create and animate code particles and shooting stars
+function createShootingStar() {
+    const shootingStar = document.createElement('div');
+    shootingStar.className = 'shooting-star';
+    
+    // Random position and angle
+    const startX = Math.random() * window.innerWidth;
+    const startY = Math.random() * (window.innerHeight / 2);
+    const angle = 30 + Math.random() * 30; // Between 30 and 60 degrees
+    
+    shootingStar.style.left = `${startX}px`;
+    shootingStar.style.top = `${startY}px`;
+    shootingStar.style.transform = `rotate(${angle}deg)`;
+    
+    // Random size
+    const size = 50 + Math.random() * 100;
+    shootingStar.style.width = `${size}px`;
+    
+    // Random animation duration
+    const duration = 2 + Math.random() * 4;
+    shootingStar.style.animation = `shootingStar ${duration}s ease-in forwards`;
+    
+    document.querySelector('.shooting-stars').appendChild(shootingStar);
+    
+    // Remove after animation completes
+    setTimeout(() => {
+        shootingStar.remove();
+    }, duration * 1000);
+}
+
+function createCodeParticle() {
+    const codeParticles = document.querySelector('.code-particles');
+    const codeSymbols = [
+        '{ code }', 
+        '<div>', 
+        'function()', 
+        'if (true) {}', 
+        '// comment', 
+        'const x = 10;', 
+        'return data;',
+        'async await',
+        'import React',
+        '[1, 2, 3]'
+    ];
+    
+    const particle = document.createElement('span');
+    particle.className = 'code-particle';
+    particle.textContent = codeSymbols[Math.floor(Math.random() * codeSymbols.length)];
+    
+    // Random positioning
+    particle.style.left = `${Math.random() * 100}%`;
+    particle.style.top = `${Math.random() * 100}%`;
+    
+    // Random size
+    particle.style.fontSize = `${Math.floor(10 + Math.random() * 8)}px`;
+    
+    // Random animation duration and delay
+    const duration = 15 + Math.random() * 20;
+    const delay = Math.random() * 10;
+    
+    particle.style.animationDuration = `${duration}s`;
+    particle.style.animationDelay = `${delay}s`;
+    
+    codeParticles.appendChild(particle);
+    
+    // Remove after animation completes
+    setTimeout(() => {
+        particle.remove();
+    }, (duration + delay) * 1000);
+}
+
+// Initialize animations when the document is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Check URL parameters for tab selection
     const urlParams = new URLSearchParams(window.location.search);
     const tab = urlParams.get('tab');
     
@@ -263,4 +335,60 @@ document.addEventListener('DOMContentLoaded', () => {
         authForms.forEach(form => form.classList.remove('active'));
         registerForm.classList.add('active');
     }
+    
+    // Create initial code particles
+    const codeParticles = document.querySelector('.code-particles');
+    const codeSymbols = [
+        '{ code }', 
+        '<div>', 
+        'function()', 
+        'if (true) {}', 
+        '// comment', 
+        'const x = 10;', 
+        'return data;',
+        'async await',
+        'import React',
+        '[1, 2, 3]'
+    ];
+    
+    // Create 15 initial code particles
+    for (let i = 0; i < 15; i++) {
+        const particle = document.createElement('span');
+        particle.className = 'code-particle';
+        particle.textContent = codeSymbols[Math.floor(Math.random() * codeSymbols.length)];
+        
+        // Random positioning
+        particle.style.left = `${Math.random() * 100}%`;
+        particle.style.top = `${Math.random() * 100}%`;
+        particle.style.animationDelay = `${Math.random() * 15}s`;
+        particle.style.fontSize = `${Math.floor(10 + Math.random() * 8)}px`;
+        
+        codeParticles.appendChild(particle);
+    }
+    
+    // Create shooting stars at intervals
+    setInterval(createShootingStar, 3000);
+    
+    // Create new code particles at intervals
+    setInterval(createCodeParticle, 5000);
+    
+    // Create additional meteor shower effect occasionally
+    setInterval(() => {
+        // Create a burst of meteors
+        for (let i = 0; i < 5; i++) {
+            setTimeout(() => {
+                createShootingStar();
+            }, i * 300);
+        }
+    }, 15000);
 });
+
+// Add additional shooting stars on mouse movement
+let mouseMoveTimeout;
+document.addEventListener('mousemove', () => {
+    clearTimeout(mouseMoveTimeout);
+    mouseMoveTimeout = setTimeout(() => {
+        createShootingStar();
+    }, 300);
+});
+

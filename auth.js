@@ -1,6 +1,6 @@
 // Firebase Configuration
 const firebaseConfig = {
-    apiKey: "YOUR_API_KEY_HERE", // Replace with your actual API key
+    apiKey: "AIzaSyCN8q1uF4Ox5drhgQLY3m-oCEt8suSlRfs", // Replace with your actual API key
     authDomain: "ahjincc.firebaseapp.com",
     databaseURL: "https://ahjincc-default-rtdb.asia-southeast1.firebasedatabase.app",
     projectId: "ahjincc",
